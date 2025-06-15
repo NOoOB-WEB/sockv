@@ -14,8 +14,19 @@ def main():
         new_server = Server(port,ip)
         new_server.bind_server()
         new_server.listen_on_server()
+        conn,addr = new_server.accept_connection()
+
+        with conn:
+            while True:
+                data = conn.recv(1024)
+                #we will get the name of the client later
+                print(f"user:{data.decode()}")
+                if data.decode() == "EXIT":
+                    break
     except Exception as error:
         print(f"{error}")
+    finally:
+        new_server.socket_server.close()
 
 if __name__ == "__main__":
     main()
