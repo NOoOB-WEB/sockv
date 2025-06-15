@@ -6,6 +6,11 @@ import socket
 import time
 import sys
 
+#defined valuse
+SLEEP_TIME = 0.5
+PORT_ARG_POSITION = 1
+DESIRED_ARG_SIZE = 2
+
 #binding exception when ip and port couldn't be assigned
 BINDING_EXCEPTION = "Could not bind server to the desired ip and port !"
 #if ip cant be retrieved this error raise
@@ -14,6 +19,7 @@ GETTING_IP_EXCEPTION = "Could not get ip address"
 GETTING_HOSTNAME_EXCEPTION = "Could not get ip address"
 #if user dont enter port or port can not be read, this error raise
 PORT_MISSING_EXCEPTION = "You didn't enter port!"
+#this exception raise when device is not connected to the router
 
 #this class raised theexceptions i wrote
 class ServerError(Exception):
@@ -24,7 +30,7 @@ def return_ip():
     try:
         host = socket.gethostname()
         ip = socket.gethostbyname(host)
-        print(f"ip found: \nIP:{ip}")
+        print(f"ip found: {ip}")
         time.sleep(0.5)
         return ip
     except Exception:
@@ -35,15 +41,15 @@ class Server:
     def __init__(self,port,ip):
         self.port = int(port)
         self.ip = ip
-        #creating a tcp server
+        #creating a tcp server(SOCK_STREAM for tcp)
         self.socket_server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
     #binding given port and ip to the socket
     def bind_server(self):
         try:
             self.socket_server.bind((self.ip,self.port))
-            time.sleep(0.5)
+            time.sleep(SLEEP_TIME)
         except Exception:
             raise ServerError(BINDING_EXCEPTION) 
         else:
-            print(f"Server running on port:{self.port} and ip:{self.ip}")
+            print(f"Server running {{port: {self.port},ip: {self.ip}}}")
