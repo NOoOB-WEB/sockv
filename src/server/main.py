@@ -9,7 +9,11 @@ def main():
             raise ServerError(PORT_MISSING_EXCEPTION)
         #port must be integer
         port = int(sys.argv[PORT_ARG_POSITION])
-        ip = return_ip()
+        print(f"Operating System: {OPERATING_SYSTEM}")
+        if OPERATING_SYSTEM == "Windows":
+            ip = return_ip_windows()
+        else:
+            ip = return_ip_unix()
         #creating new server socket
         new_server = Server(port,ip)
         new_server.bind_server()
