@@ -63,7 +63,7 @@ def return_ip_unix():
         time.sleep(SLEEP_TIME)
         return ip
     except Exception as ex:
-        raise ServerError(f"Could not get non‑loopback IP: {ex}")
+        raise ServerError(f"\033[91mCould not get non‑loopback IP: {ex}")
 
 class Server:
     #port and IP will be given to bind the werver on it
@@ -81,7 +81,7 @@ class Server:
             self.socket_server.bind((self.ip,self.port))
             time.sleep(SLEEP_TIME)
         except Exception:
-            raise ServerError(BINDING_EXCEPTION) 
+            raise ServerError(f"\033[91m{BINDING_EXCEPTION}") 
         else:
             print(f"Server running {{port: {self.port},IP: {self.ip}}}")
     
@@ -93,7 +93,7 @@ class Server:
             time.sleep(SLEEP_TIME)
             print(f"Listening on{{port: {self.port},IP: {self.ip}}}")
         except Exception:
-            raise ServerError(LISTEN_EXCEPTION + f"{{port:{self.port},IP:{self.ip}}}")
+            raise ServerError("\033[91m{LISTEN_EXCEPTION} {{port:{self.port},IP:{self.ip}}}")
     
     #accepting connection(conn for reading and writing file from client and add for getting client addr which contains port and IP)
     #conn for reading and writing file from client and add for getting client addr which contains port and IP
@@ -103,5 +103,5 @@ class Server:
             conn,addr = self.socket_server.accept()
             return conn,addr
         except Exception:
-            raise Exception(ServerError(f"{ACCEPT_EXCEPTION} {{port:{self.port}, IP{self.ip}}}"))
+            raise Exception(ServerError(f"\033[91m{ACCEPT_EXCEPTION} {{port:{self.port}, IP{self.ip}}}"))
     

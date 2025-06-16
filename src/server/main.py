@@ -28,7 +28,7 @@ def main():
                 if data.decode() == "EXIT":
                     break
     except Exception as error:
-        print(f"{error}")
+        print(f"\033[91m{error}")
     finally:
         new_server.socket_server.close()
 
